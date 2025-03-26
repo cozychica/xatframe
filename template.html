@@ -1,3 +1,4 @@
+<!-- Coded by Chica (49635006) -->
 <!-- Coded by Chica -->
 <!-- Coded by Chica -->
 <!-- Coded by Chica -->
@@ -132,38 +133,53 @@
     <div id="scrollingText">✨ Welcome to Seven - Relax ✨</div>
   </div>
   <script>
-    // Parse URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const chatName = params.get('chat') || '';
-    const color1 = params.get('color1');
-    const color2 = params.get('color2');
-    const degree = params.get('degree') || '90';
-    const animation = parseInt(params.get('animation')) || 0;
+	function parseCustomParams() {
+	  const url = window.location.href;
+	  const queryStart = url.indexOf('?');
+	  const paramObj = {};
+	  if (queryStart !== -1) {
+		const paramString = url.substring(queryStart + 1);
+		const pairs = paramString.split('~');
+		pairs.forEach(pair => {
+		  const [key, value] = pair.split('=');
+		  if (key && value) {
+			paramObj[key] = decodeURIComponent(value);
+		  }
+		});
+	  }
+	  return paramObj;
+	}
 
-    const chatDiv = document.getElementById('chatText');
-    chatDiv.textContent = chatName;
+	const params = parseCustomParams();
 
-    // Apply gradient or fallback
-    if (color1 && color2) {
-      chatDiv.style.background = `linear-gradient(${degree}deg, #${color1}, #${color2})`;
-      chatDiv.style.webkitBackgroundClip = "text";
-      chatDiv.style.webkitTextFillColor = "transparent";
-    } else {
-      chatDiv.style.color = "#" + (color1 || "FFFFFF");
-    }
 
-    // Apply glow
-    chatDiv.style.textShadow = "0 0 10px #fff, 0 0 20px #fff";
+	const chatName = params.chat || '';
+	const color1 = params.color1;
+	const color2 = params.color2;
+	const degree = params.degree || '90';
+	const animation = parseInt(params.animation) || 0;
 
-    // Animation switch
-    switch(animation) {
-      case 1: chatDiv.style.animation = "bounce 2s infinite"; break;
-      case 2: chatDiv.style.animation = "zoomInOut 3s ease-in-out infinite"; break;
-      case 3: chatDiv.style.animation = "slideLeftRight 2s ease-in-out infinite"; break;
-      case 4: chatDiv.style.animation = "rotate 5s linear infinite"; break;
-      case 5: chatDiv.style.animation = "fadeInOut 2s ease-in-out infinite"; break;
-      case 6: chatDiv.style.animation = "wave 1.5s ease-in-out infinite"; break;
-    }
+  const chatDiv = document.getElementById('chatText');
+  chatDiv.textContent = chatName;
+
+  if (color1 && color2) {
+    chatDiv.style.background = `linear-gradient(${degree}deg, #${color1}, #${color2})`;
+    chatDiv.style.webkitBackgroundClip = "text";
+    chatDiv.style.webkitTextFillColor = "transparent";
+  } else {
+    chatDiv.style.color = "#" + (color1 || "FFFFFF");
+  }
+
+  chatDiv.style.textShadow = "0 0 10px #fff, 0 0 20px #fff";
+
+  switch(animation) {
+    case 1: chatDiv.style.animation = "bounce 2s infinite"; break;
+    case 2: chatDiv.style.animation = "zoomInOut 3s ease-in-out infinite"; break;
+    case 3: chatDiv.style.animation = "slideLeftRight 2s ease-in-out infinite"; break;
+    case 4: chatDiv.style.animation = "rotate 5s linear infinite"; break;
+    case 5: chatDiv.style.animation = "fadeInOut 2s ease-in-out infinite"; break;
+    case 6: chatDiv.style.animation = "wave 1.5s ease-in-out infinite"; break;
+  }
 
     // Background animation setup
     (function () {
